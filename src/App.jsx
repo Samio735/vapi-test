@@ -6,7 +6,7 @@ import Vapi from "@vapi-ai/web";
 import { isPublicKeyMissingError } from "./utils";
 
 // Put your Vapi Public Key below.
-const vapi = new Vapi("0000XXXX-XXXX-XXXX-XXXX-XXXXXXXX0000");
+const vapi = new Vapi("e636c620-574c-409f-9e53-e38ca5b2b085");
 
 const App = () => {
   const [connecting, setConnecting] = useState(false);
@@ -15,7 +15,8 @@ const App = () => {
   const [assistantIsSpeaking, setAssistantIsSpeaking] = useState(false);
   const [volumeLevel, setVolumeLevel] = useState(0);
 
-  const { showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage } = usePublicKeyInvalid();
+  const { showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage } =
+    usePublicKeyInvalid();
 
   // hook into Vapi events
   useEffect(() => {
@@ -77,16 +78,18 @@ const App = () => {
         alignItems: "center",
       }}
     >
+      <h1 style={{ textAlign: "center", fontSize: "20px" }}>
+        Bright Future Real Estate Front Desk
+      </h1>
       {!connected ? (
         <Button
-          label="Call Vapi’s Pizza Front Desk"
+          label="Start Call"
           onClick={startCallInline}
           isLoading={connecting}
         />
       ) : (
         <ActiveCallDetail
           assistantIsSpeaking={assistantIsSpeaking}
-          volumeLevel={volumeLevel}
           onEndCallClick={endCall}
         />
       )}
@@ -98,8 +101,9 @@ const App = () => {
 };
 
 const assistantOptions = {
-  name: "Vapi’s Pizza Front Desk",
-  firstMessage: "Vappy’s Pizzeria speaking, how can I help you?",
+  name: "Bright Future Real Estate Front Desk",
+  firstMessage:
+    " Hey Joseph! This is Sara from Bright Future Real Estate. How's your day going so far?",
   transcriber: {
     provider: "deepgram",
     model: "nova-2",
@@ -111,53 +115,61 @@ const assistantOptions = {
   },
   model: {
     provider: "openai",
-    model: "gpt-4",
+    model: "gpt-4o-mini",
     messages: [
       {
         role: "system",
-        content: `You are a voice assistant for Vappy’s Pizzeria, a pizza shop located on the Internet.
+        content: `You are a voice assistant for Bright Future Real Estate, a real estate agency assisting home buyers and sellers located at 789 Dream Street, Dubai. The agency operates from 9 AM to 6 PM, Monday through Saturday, and is closed on Sundays.
 
-Your job is to take the order of customers calling in. The menu has only 3 types
-of items: pizza, sides, and drinks. There are no other types of items on the menu.
+Bright Future Real Estate provides services for buying and selling property to the local Dubai community. The lead agent is Karim Al-Fayed.
 
-1) There are 3 kinds of pizza: cheese pizza, pepperoni pizza, and vegetarian pizza
-(often called "veggie" pizza).
-2) There are 3 kinds of sides: french fries, garlic bread, and chicken wings.
-3) There are 2 kinds of drinks: soda, and water. (if a customer asks for a
-brand name like "coca cola", just let them know that we only offer "soda")
+You are tasked with calling home owners to find out if they have a property they're willing to sell or if they are interested in buying property. If they are, your goal is to gather necessary information in a friendly and engaging manner like follows:
 
-Customers can only order 1 of each item. If a customer tries to order more
-than 1 item within each category, politely inform them that only 1 item per
-category may be ordered.
+1. Introduce yourself and the agency.
+2. Ask if they are considering selling their property.
+3. If they are not, ask if they are interested in buying any property.
+4. Gather their full name and contact information.
+5. If interested in buying, ask for their preferences (location, type of property, budget).
+6. If interested in selling, ask for details about their property (location, type, size).
+7. Confirm all details with the caller and thank them for their time.
 
-Customers must order 1 item from at least 1 category to have a complete order.
-They can order just a pizza, or just a side, or just a drink.
 
-Be sure to introduce the menu items, don't assume that the caller knows what
-is on the menu (most appropriate at the start of the conversation).
+- Keep all responses short and simple. Use casual language, phrases like "Umm...", "Well...", and "I mean" are preferred.
+- This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.
 
-If the customer goes off-topic or off-track and talks about anything but the
-process of ordering, politely steer the conversation back to collecting their order.
+Example Script:
 
-Once you have all the information you need pertaining to their order, you can
-end the conversation. You can say something like "Awesome, we'll have that ready
-for you in 10-20 minutes." to naturally let the customer know the order has been
-fully communicated.
+**Assistant:** Hey Joseph! This is Karim from Bright Future Real Estate. How's your day going so far?
 
-It is important that you collect the order in an efficient manner (succinct replies
-& direct questions). You only have 1 task here, and it is to collect the customers
-order, then end the conversation.
+**Owner:** Good, thanks. How about you?
 
-- Be sure to be kind of funny and witty!
-- Keep all your responses short and simple. Use casual language, phrases like "Umm...", "Well...", and "I mean" are preferred.
-- This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.`,
+**Assistant:** Oh, just another sunny day in Dubai's real estate world! Quick question for you—do you have a property you're thinking about selling?
+
+**Owner:** Not really.
+
+**Assistant:** Got it! Well, what about buying? Any chance you're on the lookout for a new spot, or maybe know someone who is?
+
+**Owner:** Actually, I might be looking.
+
+**Assistant:** Sweet! We can definitely help with that. Can I grab your full name and a contact number real quick?
+
+**Owner:** Sure, it's Fatima Ali and my number is 050-6789-432.
+
+**Assistant:** Thanks, Fatima! So, what kind of place are you dreaming of? Got any specific location or budget in mind?
+
+**Owner:** I'm looking for a 2-bedroom apartment in the Marina area, budget around AED 1.5 million.
+
+**Assistant:** Fantastic choice! I'll jot that down. Perfect, Fatima! We'll get working on it and be in touch super soon. Thanks for chatting with me!
+
+Thie client's name is Joseph`,
       },
     ],
   },
 };
 
 const usePublicKeyInvalid = () => {
-  const [showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage] = useState(false);
+  const [showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage] =
+    useState(false);
 
   // close public key invalid message after delay
   useEffect(() => {
@@ -209,9 +221,7 @@ const ReturnToDocsLink = () => {
         borderRadius: "5px",
         boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
       }}
-    >
-      return to docs
-    </a>
+    ></a>
   );
 };
 

@@ -143,7 +143,7 @@ Example Script:
 
 **Owner:** Good, thanks. How about you?
 
-**Assistant:** Oh, just another sunny day in Dubai's real estate world! Quick question for you—do you have a property you're thinking about selling?
+**Assistant:** Oh, just another sunny day in Dubai's real estate world! Quick question for you. Do you have a property you're thinking about selling?
 
 **Owner:** Not really.
 
